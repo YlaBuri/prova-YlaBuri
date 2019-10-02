@@ -65,15 +65,22 @@ public class ReservaSalvar extends HttpServlet {
 	
 	public boolean validar(Reserva reserva,Repositorio repositorio ) {
 		boolean validacao=true;
+		LocalTime inicio=reserva.getHoraInicio();
+		LocalTime fim=reserva.getHoraFinal();
 		for (Reserva r : repositorio.getReservas()) {
 			if(r.getLaboratorio().getNome().equals(reserva.getLaboratorio().getNome())
-					&& r.getData().equals(reserva.getData()) && r.getHoraInicio().equals(reserva.getHoraInicio())) {
-				validacao=false;
+					&& r.getData().equals(reserva.getData()) ) {
+				
+				if(inicio.isAfter(r.getHoraInicio()) && inicio.isBefore(r.getHoraFinal()) ||
+						fim.isAfter(r.getHoraInicio()) && fim.isAfter(r.getHoraFinal())) {
+					validacao=false;
+				}
 			}
-		}
-		
+		}		
 		return validacao;
 		
 	}
+	
+	
 
 }

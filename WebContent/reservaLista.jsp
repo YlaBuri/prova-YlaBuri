@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="ReservaForm">Nova Reserva</a href="Painel">|<a>Painel</a><br>
+<a href="ReservaForm">Nova Reserva</a>|<a href="Painel">Painel</a><br>
 
 	<table border="1">
 		<thead>
@@ -25,7 +25,7 @@
 					<td>${r.laboratorio.nome}</td>
 					<td>${r.horaInicio}</td>
 					<td>${r.horaFinal}</td>
-					<td>Editar|Excluir</td>
+					<td><a href="ReservaExcluir?id=${r.id}">Excluir</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>

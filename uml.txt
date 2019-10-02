@@ -1,0 +1,102 @@
+https://www.planttext.com
+@startuml
+
+
+title Laboratorios - Diagrama de Classes
+
+package br.ucsal.lamis.model <<Model>> {
+ class Reserva {
+	- id: Integer
+	- objetivo: String 
+	- descricao: String 
+	- data: LocalDate
+	- horaInicio: LocalTime 
+	- horaFim: LocalTIme
+	- laboratorio: Laboratorio
+	- usuario: Usuario
+	
+	+getId(): Integer 
+	+setId(id: Integer): void
+
+
+
+ }
+
+ class Usuario {
+	
+	- id: Integer
+	- login: String 
+	- senha: String 
+	
+	+getId(): Integer 
+	+setId(id: Integer): void
+	+getLogin(): String
+	+setLogin(login: String): void
+	+getSenha(): String
+	+setSenha(senha: String): void
+ }
+
+ class Laboratorio {
+	
+	-id: Integer
+	-nome: String
+	-descricao: String
+	-bloco: Bloco
+
+	+getId(): Integer 
+	+setId(id: Integer): void
+	+getNome(): String
+	+setNome(nome: String): void
+	+getDescricao(): String
+	+setDescricao(descricao: String): void
+	
+	
+
+ }
+
+ class Bloco {
+	-id: Integer
+	-nome: String
+	
+	+getId(): Integer 
+	+setId(id: Integer): void
+	+getNome(): String
+	+setNome(nome: String): void
+ }
+}
+
+package Database <<Database>> {
+
+  class Repositorio {
+	
+	-laboratorios: List<Laboratorio>
+	-usuarios: List<Usuario>
+	-reservas: List<Reserva>
+
+	+getLaboratorios(): List<Laboratorio>
+	+getUsuarios(): List<Usuario> 
+	+getReservas(): List<Reserva> 
+
+	+inserirUsuario(usuario: Usuario): void
+	+removerUsuario(id: Integer): void
+	+alterarUsuario(usuario: Usuario): void
+	+obterUsuario(id: Integer): Usuario
+	
+	+inserirReserva(reserva: Reserva): void
+	+removerReserva(id: Integer): void
+	+obterReserva(id: Integer): Reserva
+
+
+  }
+  
+}
+
+Bloco "1" *-up- "*" Laboratorio: Composition
+Reserva "1" *-up- "*" Laboratorio: Composition
+Reserva "1" *-up- "*" Usuario: Composition
+
+
+
+
+
+@enduml

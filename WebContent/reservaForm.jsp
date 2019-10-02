@@ -12,9 +12,9 @@
 	<form action="ReservaSalvar" method="post">
 		<input type="hidden" name="idUsuario" value="${usuario.id}">
 		selecione o laboratorio
-		<select>
+		<select name="laboratorio">
 			<option>Selecione</option>
-			<c:forEach var="lamis" items="${lamis }">
+			<c:forEach var="lami" items="${lamis }">
 				<option value="${lami.id}">${lami.nome}</option>
 			</c:forEach>
 		</select>

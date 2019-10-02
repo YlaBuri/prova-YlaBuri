@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="ReservaForm">Nova Reserva</a><br>
+<a href="ReservaForm">Nova Reserva</a href="Painel">|<a>Painel</a><br>
 
 	<table border="1">
 		<thead>

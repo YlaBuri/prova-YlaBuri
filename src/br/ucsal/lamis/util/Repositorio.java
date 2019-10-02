@@ -37,14 +37,7 @@ public class Repositorio {
 		
 		this.blocos.add(blocoA);
 		this.blocos.add(blocoB);
-		
-		Laboratorio lami = new Laboratorio();
-		lami.setId(1);
-		lami.setBloco(blocoA);
-		lami.setNome("Lami 1");
-		lami.setDescricao("Descrição");
-
-		
+				
 	}
 
 	public List<Laboratorio> getLaboratorios() {

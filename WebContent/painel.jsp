@@ -9,6 +9,6 @@
 <body>
 Bem vindo, ${usuario.login} <a href="./Logout" >Sair</a>
 <br>
-<a href='./LaboratorioLista'>Laboratorios </a>
+<a href='./LaboratorioLista'>Laboratorios </a> | <a href="./ReservaLista">Reservas</a>
 </body>
 </html>

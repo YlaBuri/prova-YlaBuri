@@ -10,6 +10,8 @@
 <body>
 
 	<form action="ReservaSalvar" method="post">
+	${erro}
+	<br>
 		<input type="hidden" name="idUsuario" value="${usuario.id}">
 		selecione o laboratorio
 		<select name="laboratorio">

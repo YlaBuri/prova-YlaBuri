@@ -53,10 +53,27 @@ public class ReservaSalvar extends HttpServlet {
 		reserva.setData(LocalDate.parse(data, dateFormat));
 		reserva.setHoraInicio(LocalTime.parse(horaInicio, timeFormat));
 		reserva.setHoraFinal(LocalTime.parse(horaFinal, timeFormat));
+		if(validar(reserva, repositorio)) {
+			repositorio.inserirReserva(reserva);
+			response.sendRedirect("./ReservaLista");
+		}else {
+			request.setAttribute("erro", "Laboratorio Indisponivel");
+			request.getRequestDispatcher("./reservaForm.jsp").forward(request, response);
+		}
 		
-		repositorio.inserirReserva(reserva);
+	}
+	
+	public boolean validar(Reserva reserva,Repositorio repositorio ) {
+		boolean validacao=true;
+		for (Reserva r : repositorio.getReservas()) {
+			if(r.getLaboratorio().getNome().equals(reserva.getLaboratorio().getNome())
+					&& r.getData().equals(reserva.getData()) && r.getHoraInicio().equals(reserva.getHoraInicio())) {
+				validacao=false;
+			}
+		}
 		
-		response.sendRedirect("./ReservaLista");
+		return validacao;
+		
 	}
 
 }

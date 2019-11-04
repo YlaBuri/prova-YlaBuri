@@ -12,13 +12,14 @@ public class UsuarioDAO {
 	
 	public static boolean autenticar(Usuario usuario) {
 		boolean retorno = false;
-		 Connection con = BancoUtil.getConnection(); 
-		 try { 
+		Connection con = BancoUtil.getConnection(); 
+		try { 
 			 String sql="select * from usuarios where login=? and senha=?;";
 			 PreparedStatement pstmt= con.prepareStatement(sql);
 			 pstmt.setString(1, usuario.getLogin());
 			 pstmt.setString(2, usuario.getSenha());
 			 ResultSet resultSet=pstmt.executeQuery();
+			 
 			 if(resultSet.next()){ 
 				 retorno = true; 
 			 } 
@@ -30,5 +31,7 @@ public class UsuarioDAO {
 		
 		return retorno;
 	}
+	
+	
 }
 

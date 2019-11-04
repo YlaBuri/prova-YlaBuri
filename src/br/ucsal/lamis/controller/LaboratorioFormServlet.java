@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ucsal.lamis.DAO.BlocoDAO;
+import br.ucsal.lamis.model.Bloco;
 import br.ucsal.lamis.model.Laboratorio;
 import br.ucsal.lamis.util.Repositorio;
 
@@ -28,7 +30,8 @@ public class LaboratorioFormServlet extends HttpServlet {
 			laboratorio = repositorio.obterLaboratorio(Integer.parseInt(sid));
 		}
 		request.setAttribute("laboratorio", laboratorio);
-		request.setAttribute("blocos", repositorio.getBlocos());
+		
+		request.setAttribute("blocos", BlocoDAO.getBlocos());
 		request.getRequestDispatcher("laboratorioForm.jsp").forward(request, response);
 		
 	}

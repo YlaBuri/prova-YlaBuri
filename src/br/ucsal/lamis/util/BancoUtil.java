@@ -11,7 +11,7 @@ import br.ucsal.lamis.model.Usuario;
 
 public class BancoUtil {
 	private static Connection connection;
-	String type="HSQL Database Engine Server";
+
 	String driver="org.hsqldb.jdbcDriver";
 	String url="jdbc:hsqldb:hsql://localhost/banco";
 	String user="SA";

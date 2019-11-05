@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ucsal.lamis.DAO.LaboratorioDAO;
 import br.ucsal.lamis.util.Repositorio;
 
 /**
@@ -25,8 +26,8 @@ public class LaboratorioExcluirServlet extends HttpServlet {
 		Repositorio repositorio = (Repositorio) request.getSession().getServletContext().getAttribute("repositorio");
 
 		String sId = request.getParameter("id");
-		repositorio.removerLaboratorio(Integer.parseInt(sId));
-		
+		//repositorio.removerLaboratorio(Integer.parseInt(sId));
+		LaboratorioDAO.removerLaboratorio(Integer.parseInt(sId));
 		response.sendRedirect("./LaboratorioLista");
 
 	}

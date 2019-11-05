@@ -33,9 +33,21 @@ public class BlocoDAO {
 		return blocos;
 	}
 	
-	public Bloco obterBloco(Integer id) {
-		Bloco bloco = null;
-		
+	public static Bloco obterBloco(Integer id) {
+		Bloco bloco = new Bloco();
+		Connection con = BancoUtil.getConnection(); 
+		try {
+			 String sql="select * from blocos where bloco_id=?;";
+			 PreparedStatement pstmt= con.prepareStatement(sql);
+			 pstmt.setInt(1, id);
+			 ResultSet resultSet=pstmt.executeQuery();
+			 if(resultSet.next()) {
+				 bloco.setId(resultSet.getInt("bloco_id"));
+				 bloco.setNome(resultSet.getString("nome"));
+			 }
+		} catch (SQLException e) {
+			 e.printStackTrace(); 
+		}
 		return bloco;
 	}
 }

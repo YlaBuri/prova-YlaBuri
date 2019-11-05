@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ucsal.lamis.DAO.BlocoDAO;
+import br.ucsal.lamis.DAO.LaboratorioDAO;
 import br.ucsal.lamis.model.Laboratorio;
 import br.ucsal.lamis.util.Repositorio;
 
@@ -44,8 +46,16 @@ public class LaboratorioSalvarServlet extends HttpServlet {
 		}
 		laboratorio.setNome(nome);
 		laboratorio.setDescricao(descricao);
-		laboratorio.setBloco(repositorio.obterBloco(Integer.parseInt(sIdBloco)));
-		repositorio.salvarLaboratorio(laboratorio);
+		laboratorio.setBloco(BlocoDAO.obterBloco(Integer.parseInt(sIdBloco)));
+		//laboratorio.setBloco(repositorio.obterBloco(Integer.parseInt(sIdBloco)));
+		//repositorio.salvarLaboratorio(laboratorio);
+		
+		
+		if(sId != null && !sId.trim().isEmpty() ) {
+			LaboratorioDAO.alterarLaboratorio(laboratorio);
+		}else {
+			LaboratorioDAO.salvarLaboratorio(laboratorio);
+		}
 		
 		response.sendRedirect("./LaboratorioLista");
 		

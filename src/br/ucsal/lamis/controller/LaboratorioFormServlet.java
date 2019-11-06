@@ -1,6 +1,9 @@
 package br.ucsal.lamis.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,9 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.ucsal.lamis.DAO.BlocoDAO;
+import br.ucsal.lamis.DAO.LaboratorioDAO;
 import br.ucsal.lamis.model.Bloco;
 import br.ucsal.lamis.model.Laboratorio;
-import br.ucsal.lamis.util.Repositorio;
+
 
 /**
  * Servlet implementation class LaboratorioForm
@@ -25,13 +29,10 @@ public class LaboratorioFormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String sid = request.getParameter("id");
 		Laboratorio laboratorio = null;
-		Repositorio repositorio = (Repositorio) request.getSession().getServletContext().getAttribute("repositorio");
 		if(sid !=null ) {
-			laboratorio = repositorio.obterLaboratorio(Integer.parseInt(sid));
+			laboratorio = LaboratorioDAO.obterLaboratorio(Integer.parseInt(sid));
 		}
-		request.setAttribute("laboratorio", laboratorio);
-		
-		request.setAttribute("blocos", BlocoDAO.getBlocos());
+		request.setAttribute("blocos",BlocoDAO.getBlocos());
 		request.getRequestDispatcher("laboratorioForm.jsp").forward(request, response);
 		
 	}

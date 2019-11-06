@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.ucsal.lamis.model.Bloco;
 import br.ucsal.lamis.model.Laboratorio;
+import br.ucsal.lamis.model.Usuario;
 import br.ucsal.lamis.util.BancoUtil;
 
 public class LaboratorioDAO {
@@ -16,7 +17,7 @@ public class LaboratorioDAO {
 		List<Laboratorio> laboratorios = new ArrayList<Laboratorio>();
 		Connection con = BancoUtil.getConnection(); 
 		try { 
-			 String sql="select * from laboratorios;";
+			 String sql="SELECT * FROM LABORATORIOS;";
 			 PreparedStatement pstmt= con.prepareStatement(sql);
 			 ResultSet resultSet=pstmt.executeQuery();
 			 
@@ -36,8 +37,28 @@ public class LaboratorioDAO {
 		return laboratorios;
 	}
 	
-	public Laboratorio obterLaboratorio(Integer id) {
-		return null;
+	public static Laboratorio obterLaboratorio(Integer id) {
+		Laboratorio laboratorio=null;
+		Connection con = BancoUtil.getConnection(); 
+		try { 
+			 String sql="select * from laboratorios where laboratorio_id=?;";
+			 PreparedStatement pstmt= con.prepareStatement(sql);
+			 pstmt.setInt(1, id);
+			 ResultSet resultSet=pstmt.executeQuery();
+			 
+			 if(resultSet.next()){ 
+				laboratorio = new Laboratorio();
+				laboratorio.setId(resultSet.getInt("laboratorio_id"));
+				laboratorio.setNome(resultSet.getString("nome"));
+				laboratorio.setDescricao(resultSet.getString("descricao"));
+				laboratorio.setBloco(BlocoDAO.obterBloco(resultSet.getInt("bloco_id")));
+			 } 
+			 resultSet.close(); 
+			 pstmt.close(); 
+		 } catch (SQLException e) { 
+			 e.printStackTrace(); 
+		 } 	
+		return laboratorio;
 	}
 
 	public static void salvarLaboratorio(Laboratorio laboratorio) {
@@ -71,10 +92,6 @@ public class LaboratorioDAO {
 		 } 
 	}
 	
-
-	public void inserirLaboratorio(Laboratorio laboratorio) {
-		
-	}
 
 	public static void removerLaboratorio(Integer id) {
 		Connection con = BancoUtil.getConnection();

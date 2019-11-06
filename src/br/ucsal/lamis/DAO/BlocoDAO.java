@@ -34,7 +34,7 @@ public class BlocoDAO {
 	}
 	
 	public static Bloco obterBloco(Integer id) {
-		Bloco bloco = new Bloco();
+		Bloco bloco = null;
 		Connection con = BancoUtil.getConnection(); 
 		try {
 			 String sql="select * from blocos where bloco_id=?;";
@@ -42,6 +42,7 @@ public class BlocoDAO {
 			 pstmt.setInt(1, id);
 			 ResultSet resultSet=pstmt.executeQuery();
 			 if(resultSet.next()) {
+				 bloco=new Bloco();
 				 bloco.setId(resultSet.getInt("bloco_id"));
 				 bloco.setNome(resultSet.getString("nome"));
 			 }

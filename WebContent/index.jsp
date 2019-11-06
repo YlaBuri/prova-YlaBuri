@@ -8,13 +8,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Laboratorios</title>
-<jsp:useBean id="repositorio" class="br.ucsal.lamis.util.Repositorio" scope="application" />
+<%-- <jsp:useBean id="repositorio" class="br.ucsal.lamis.util.Repositorio" scope="application" /> --%>
 </head>
 <body>
 	<form action="./Login" method="post">
 		${erro} <br>
-		Login: <input name="login" type="text"> <br>
-		Senha: <input name="senha" type="password"> <br>
+		Login: <input name="login" type="text" value="user1"> <br>
+		Senha: <input name="senha" type="password" value="1234"> <br>
 		<button type="submit">Entrar</button>
 	</form>
 	

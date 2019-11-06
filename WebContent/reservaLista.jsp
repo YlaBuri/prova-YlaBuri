@@ -14,6 +14,7 @@
 		<thead>
 			<tr>
 				<th>Laboratorio</th>
+				<th>Data</th>
 				<th>inicio da reserva</th>
 				<th>final da reserva</th>
 				<th></th>
@@ -23,6 +24,7 @@
 			<c:forEach var="r" items="${reservas}">
 				<tr>
 					<td>${r.laboratorio.nome}</td>
+					<td>${r.data}</td>
 					<td>${r.horaInicio}</td>
 					<td>${r.horaFinal}</td>
 					<td><a href="ReservaExcluir?id=${r.id}">Excluir</a></td>

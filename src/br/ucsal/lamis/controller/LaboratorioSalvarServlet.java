@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.ucsal.lamis.DAO.BlocoDAO;
 import br.ucsal.lamis.DAO.LaboratorioDAO;
 import br.ucsal.lamis.model.Laboratorio;
-import br.ucsal.lamis.util.Repositorio;
+
 
 /**
  * Servlet implementation class LaboratorioSalvarServlet
@@ -36,26 +36,21 @@ public class LaboratorioSalvarServlet extends HttpServlet {
 		// <select name="bloco">
 		String sIdBloco = request.getParameter("bloco");
 
-		Repositorio repositorio = (Repositorio) request.getSession().getServletContext().getAttribute("repositorio");
-
+		
 		Laboratorio laboratorio = null;
 		if(sId != null && !sId.trim().isEmpty() ) {
-			laboratorio = repositorio.obterLaboratorio(Integer.parseInt(sId));
-		}else {
-			laboratorio = new Laboratorio();
-		}
-		laboratorio.setNome(nome);
-		laboratorio.setDescricao(descricao);
-		laboratorio.setBloco(BlocoDAO.obterBloco(Integer.parseInt(sIdBloco)));
-		//laboratorio.setBloco(repositorio.obterBloco(Integer.parseInt(sIdBloco)));
-		//repositorio.salvarLaboratorio(laboratorio);
-		
-		
-		if(sId != null && !sId.trim().isEmpty() ) {
+			laboratorio = LaboratorioDAO.obterLaboratorio(Integer.parseInt(sId));
+			laboratorio.setNome(nome);
+			laboratorio.setDescricao(descricao);
+			laboratorio.setBloco(BlocoDAO.obterBloco(Integer.parseInt(sIdBloco)));
 			LaboratorioDAO.alterarLaboratorio(laboratorio);
 		}else {
+			laboratorio = new Laboratorio();
+			laboratorio.setNome(nome);
+			laboratorio.setDescricao(descricao);
+			laboratorio.setBloco(BlocoDAO.obterBloco(Integer.parseInt(sIdBloco)));
 			LaboratorioDAO.salvarLaboratorio(laboratorio);
-		}
+		}	
 		
 		response.sendRedirect("./LaboratorioLista");
 		

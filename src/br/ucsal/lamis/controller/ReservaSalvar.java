@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ucsal.lamis.DAO.LaboratorioDAO;
+import br.ucsal.lamis.DAO.ReservaDAO;
 import br.ucsal.lamis.model.Laboratorio;
 import br.ucsal.lamis.model.Reserva;
 import br.ucsal.lamis.model.Usuario;
-import br.ucsal.lamis.util.Repositorio;
+
 
 /**
  * Servlet implementation class ReservaSalvar
@@ -21,7 +23,7 @@ import br.ucsal.lamis.util.Repositorio;
 @WebServlet("/ReservaSalvar")
 public class ReservaSalvar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:mm");
 	
     public ReservaSalvar() {
@@ -31,20 +33,19 @@ public class ReservaSalvar extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Repositorio repositorio = (Repositorio) request.getSession().getServletContext().getAttribute("repositorio");
 		
 		String idLami= request.getParameter("laboratorio");
-		String idUser= request.getParameter("idUsuario");
 		String objetivo = request.getParameter("objetivo");
 		String descricao = request.getParameter("descricao");
 		String data= request.getParameter("data");
 		String horaInicio= request.getParameter("horaInicio");
 		String horaFinal= request.getParameter("horaFinal");
 		
-		
 		Reserva reserva = new Reserva();
-		Laboratorio l = repositorio.obterLaboratorio(Integer.parseInt(idLami));
-		Usuario u = repositorio.obterUsuario(Integer.parseInt(idUser));
+		
+		Laboratorio l = LaboratorioDAO.obterLaboratorio(Integer.parseInt(idLami));
+	
+		Usuario u = (Usuario) request.getSession().getAttribute("usuario");
 			
 		reserva.setLaboratorio(l);
 		reserva.setUsuario(u);
@@ -53,8 +54,9 @@ public class ReservaSalvar extends HttpServlet {
 		reserva.setData(LocalDate.parse(data, dateFormat));
 		reserva.setHoraInicio(LocalTime.parse(horaInicio, timeFormat));
 		reserva.setHoraFinal(LocalTime.parse(horaFinal, timeFormat));
-		if(validar(reserva, repositorio)) {
-			repositorio.inserirReserva(reserva);
+		
+		if(validar(reserva)) {
+			ReservaDAO.inserirReserva(reserva);
 			response.sendRedirect("./ReservaLista");
 		}else {
 			request.setAttribute("erro", "Laboratorio Indisponivel");
@@ -63,12 +65,13 @@ public class ReservaSalvar extends HttpServlet {
 		
 	}
 	
-	public boolean validar(Reserva reserva,Repositorio repositorio ) {
+	public boolean validar(Reserva reserva) {
 		boolean validacao=true;
 		LocalTime inicio=reserva.getHoraInicio();
 		LocalTime fim=reserva.getHoraFinal();
-		for (Reserva r : repositorio.getReservas()) {
-			if(r.getLaboratorio().getNome().equals(reserva.getLaboratorio().getNome())
+		
+		for (Reserva r : ReservaDAO.getReservas()) {
+			if(r.getLaboratorio().getId().equals(reserva.getLaboratorio().getId())
 					&& r.getData().equals(reserva.getData()) ) {
 				
 				if(inicio.isAfter(r.getHoraInicio()) && inicio.isBefore(r.getHoraFinal()) ||

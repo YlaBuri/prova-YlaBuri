@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ucsal.lamis.DAO.UsuarioDAO;
 import br.ucsal.lamis.model.Usuario;
-import br.ucsal.lamis.util.BancoUtil;
-import br.ucsal.lamis.util.Repositorio;
+
 
 /**
  * Servlet implementation class LoginServlet
@@ -29,9 +28,8 @@ public class LoginServlet extends HttpServlet {
 		Usuario usuario = new Usuario();
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
-		Repositorio repositorio = (Repositorio) request.getSession().getServletContext().getAttribute("repositorio");
-		
-		if(UsuarioDAO.autenticar(usuario)) {
+		usuario=UsuarioDAO.autenticar(usuario);
+		if(usuario!= null) {
 			request.getSession().setAttribute("usuario", usuario);
 			response.sendRedirect("./Painel");
 		}else {

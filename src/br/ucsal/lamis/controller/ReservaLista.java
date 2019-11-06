@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ucsal.lamis.util.Repositorio;
+import br.ucsal.lamis.DAO.ReservaDAO;
 
 /**
  * Servlet implementation class ReservaLista
@@ -25,8 +25,7 @@ public class ReservaLista extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Repositorio repositorio = (Repositorio) request.getSession().getServletContext().getAttribute("repositorio");
-		request.setAttribute("reservas", repositorio.getReservas());
+		request.setAttribute("reservas", ReservaDAO.getReservas());
 		request.getRequestDispatcher("reservaLista.jsp").forward(request, response);
 	}
 
